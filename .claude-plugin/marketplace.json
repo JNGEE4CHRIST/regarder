@@ -1,0 +1,17 @@
+{
+  "name": "regarder",
+  "metadata": {
+    "description": "/regarder — ton Claude entend ET voit tes screen records. Voix transcrite en local (aucune clé API), chaque phrase attachée à l'écran de ce moment-là."
+  },
+  "owner": { "name": "JNT Productions" },
+  "plugins": [
+    {
+      "name": "regarder",
+      "description": "Écouter et voir une vidéo locale en même temps. Transcription locale mlx-whisper sur Mac Apple Silicon, faster-whisper ailleurs (Mac Apple Silicon, hors ligne, gratuite) + extraction des écrans alignés sur chaque réplique. Refuse bruyamment une vidéo sans son au lieu de rendre les images en silence.",
+      "author": { "name": "JNT Productions" },
+      "source": "./",
+      "category": "productivity",
+      "homepage": "https://github.com/JNGEE4CHRIST/regarder"
+    }
+  ]
+}

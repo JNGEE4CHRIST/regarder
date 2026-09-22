@@ -1,0 +1,8 @@
+{
+  "name": "regarder",
+  "version": "1.0.0",
+  "description": "Entendre ET voir une vidéo locale — transcription locale mlx-whisper sur Mac Apple Silicon, faster-whisper ailleurs (aucune clé API) alignée sur l'écran de chaque réplique. Pour Codex : lancer HORS bac à sable, le GPU n'y est pas visible.",
+  "repository": "https://github.com/JNGEE4CHRIST/regarder",
+  "author": "JNT Productions",
+  "license": "MIT"
+}

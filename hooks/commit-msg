@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+# ══════════════════════════════════════════════════════════════════════════════
+# COMMIT-MSG — AUCUN NOM PRIVÉ DANS UN MESSAGE DE COMMIT
+#
+# ⛔ LE TROU QUE CE HOOK BOUCHE, TROUVÉ PAR KIMI LE 20 SEPTEMBRE 2026.
+#    L'anonymiseur de la publication garde les CONTENUS DE FICHIERS. Rien ne gardait
+#    les MESSAGES DE COMMIT. Résultat mesuré sur la branche publiée : un commit
+#    contenait, en toutes lettres, trois noms de clients — lisibles par n'importe qui
+#    dans `git log`. Le garde gardait les fichiers, pas le DÉPÔT. Et le message qui a
+#    fui racontait justement une revue sur l'anonymisation : c'est en DOCUMENTANT le
+#    garde qu'on a percé le trou qu'il bouche.
+#
+# ⛔⛔ ET CE FICHIER-CI NE CONTIENT AUCUN NOM — C'EST TOUT LE POINT (21 sept. 2026).
+#    La 1re version de ce hook portait les trois noms EN CLAIR dans son motif, et elle
+#    a été poussée sur le dépôt public : le garde publiait exactement ce qu'il protège.
+#    ⭐ MÊME RAISON QUE L'ANONYMISEUR RESTE DANS LE DÉPÔT PRIVÉ. Un garde calé sur une
+#    liste de noms doit lire cette liste AILLEURS que là où il vit.
+#    La liste vit hors de tout dépôt : ~/.claude/regles/noms-prives.txt (un motif par
+#    ligne). Absente, le hook garde quand même les chemins et les adresses, et il le DIT.
+# ══════════════════════════════════════════════════════════════════════════════
+set -euo pipefail
+MSG="$1"
+
+# Ce qui se garde SANS liste : les adresses courriel. Aucun nom, AUCUN CHEMIN ici —
+# un chemin machine et un nom de dépôt privé sont aussi privés qu'un nom de client,
+# et ce fichier est PUBLIC. Ils vivent dans la liste, hors de tout dépôt.
+MOTIF="@gmail|@hotmail|@outlook"
+
+LISTE="$HOME/.claude/regles/noms-prives.txt"
+if [ -r "$LISTE" ]; then
+  while IFS= read -r ligne; do
+    case "$ligne" in ''|'#'*) continue ;; esac
+    MOTIF="$MOTIF|$ligne"
+  done < "$LISTE"
+else
+  echo "⚠️  liste de noms privés absente ($LISTE) — seules les ADRESSES COURRIEL" >&2
+  echo "    sont gardées. Ni les noms, ni les chemins machine ne le sont." >&2
+fi
+
+TROUVE=$(grep -niE "$MOTIF" "$MSG" | grep -v '^[0-9]*:#' || true)
+
+if [ -n "$TROUVE" ]; then
+  echo "🔴 COMMIT REFUSÉ — information privée dans le MESSAGE de commit :" >&2
+  echo "$TROUVE" | sed 's/^/     /' >&2
+  echo >&2
+  echo "   Ce dépôt est PUBLIC. Un message de commit est aussi lisible qu'un fichier," >&2
+  echo "   et l'anonymiseur de la publication ne le voit pas." >&2
+  echo "   👉 Réécrire le message sans (dire « un client », « le dépôt source »)." >&2
+  exit 1
+fi
+exit 0

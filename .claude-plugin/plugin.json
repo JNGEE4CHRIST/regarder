@@ -1,0 +1,10 @@
+{
+  "name": "regarder",
+  "version": "1.0.0",
+  "description": "Entendre ET voir une vidéo en même temps. Transcrit la voix en local (mlx-whisper sur Mac Apple Silicon, faster-whisper ailleurs, gratuit, hors ligne, aucune clé API) et attache à chaque phrase l'écran de ce moment-là. Fait pour les screen records où quelqu'un parle par-dessus son écran — que /watch rend en silence, sans le son, parce qu'un screen record n'a aucun sous-titre natif.",
+  "author": { "name": "JNT Productions" },
+  "homepage": "https://github.com/JNGEE4CHRIST/regarder",
+  "repository": "https://github.com/JNGEE4CHRIST/regarder",
+  "license": "MIT",
+  "keywords": ["video", "screen-record", "screencast", "transcription", "whisper", "mlx", "local", "offline", "ffmpeg", "frames", "timestamps", "francais", "apple-silicon"]
+}

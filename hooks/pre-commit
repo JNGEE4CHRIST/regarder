@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# ⛔ DEUX GATES DE DOCUMENTATION, ET ILS NE MESURENT PAS LA MÊME CHOSE.
+#    · tables-identiques.py : la table d'aiguillage est COPIÉE 3 FOIS — elle doit rester
+#      UNE. Une divergence de doc ne plante JAMAIS : les trois copies continuent de se
+#      lire comme la vérité, et on l'apprend le jour où deux agents envoient la même
+#      vidéo à deux outils différents.
+#    · rendu-markdown.py : une table coupée par un paragraphe se rend en TEXTE BRUT sur
+#      GitHub, alors que le fichier SOURCE se lit parfaitement. Deux tableaux étaient
+#      cassés comme ça (revue Kimi, 20 sept. 2026), dont celui qui dit que Windows natif
+#      est refusé — le lecteur du README ne le voyait pas.
+#    ⚠️ Les deux ont existé AVANT ce hook, et ne tournaient que dans le script de
+#    publication du mainteneur. Or le geste naturel — corriger une ligne là où on vient
+#    de la lire — n'était vu par personne. Un gate se branche à une PORTE le jour où il naît.
+#
+# POUR L'INSTALLER (les hooks ne se clonent pas — c'est git, pas nous) :
+#     git config core.hooksPath hooks
+set -euo pipefail
+RACINE="$(git rev-parse --show-toplevel)"
+CODE=0
+python3 "$RACINE/gates/tables-identiques.py" "$RACINE" || CODE=1
+python3 "$RACINE/gates/rendu-markdown.py"    "$RACINE" || CODE=1
+exit $CODE
